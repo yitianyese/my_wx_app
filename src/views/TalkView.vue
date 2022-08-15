@@ -7,17 +7,23 @@
       <textarea @keyup="pushMessage" v-model="message"></textarea>
       <input type="button" class="push" value="发送">
     </div>
+    <FileCop class="sdhi" />
   </div>
 </template>
 
 <script lang="ts">
-import { ref, Ref } from 'vue'
+import { ref, Ref, provide } from 'vue'
 import { createWs } from '../assets/api/index'
+import FileCop from '../components/FileCop.vue'
 
 export default {
+  components: {
+    FileCop
+  },
   setup ():object {
     // 创建WebSocket1进行发送数据,id是发送人
     const sendMessageWs = createWs('/sendMessage/1')
+    provide('sendMessageWs', sendMessageWs)
     // 创建WebSocket1进行发送数据
     const getMessageWs = createWs('/getMessage/1')
     // 使用message去获取到输入框的内容
@@ -77,6 +83,11 @@ export default {
     .push:active {
       background-color: #aaa;
     }
+  }
+  .sdhi {
+    width: 100px;
+    height: 100px;
+    background-color: pink;
   }
 }
 </style>
